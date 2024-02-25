@@ -1,9 +1,7 @@
 import 'package:cohortly/pages/signin.dart';
-<<<<<<< Updated upstream
 import 'package:cohortly/pages/signup.dart';
-=======
 import 'package:firebase_core/firebase_core.dart';
->>>>>>> Stashed changes
+import 'package:cohortly/pages/home.dart';
 import 'package:flutter/material.dart';
 
 void main() async{
