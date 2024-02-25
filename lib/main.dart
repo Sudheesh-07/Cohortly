@@ -1,8 +1,14 @@
 import 'package:cohortly/pages/signin.dart';
+<<<<<<< Updated upstream
 import 'package:cohortly/pages/signup.dart';
+=======
+import 'package:firebase_core/firebase_core.dart';
+>>>>>>> Stashed changes
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
