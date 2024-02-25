@@ -26,18 +26,18 @@ class _SignInState extends State<SignIn> {
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         colors: [Color(0xFF7f30fe), Color(0xFF6380fb)],
-                        begin: Alignment.topleft,
+                        begin: Alignment.topLeft,
                         end: Alignment.bottomRight), //Linear Gradient
                     borderRadius: BorderRadius.vertical(
                         bottom: Radius.elliptical(MediaQuery
                             .of(context)
                             .size
-                            .width, 1o5.0))
+                            .width, 105.0))
                 )), //Container //BoxDecoration
             Padding(
               padding: const EdgeInsets.only(top: 70.0),
               child: Column(
-                children: [
+                children: <Widget>[
                   Center(
                       child: Text(
                         "SignIn",
@@ -53,7 +53,7 @@ class _SignInState extends State<SignIn> {
                             color: Color(0xFFbbb0ff),
                             fontSize: 18.0,
                             fontWeight: FontWeight.w500), //textstyle
-                      )) //text //center
+                      )), //text //center
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 20.0),
                     height: MediaQuery
