@@ -20,7 +20,7 @@ class _SignInState extends State<SignIn> {
   userLogin() async{
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-      
+
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Home()));
     }
     on FirebaseAuthException catch(e){
@@ -204,7 +204,7 @@ class _SignInState extends State<SignIn> {
                        style: TextStyle(color: Colors.black,fontSize: 16.0),
                  ),
                      Text(
-                         " Sign Up Now!",
+                         " Sign Up Now!!",
                          style: TextStyle(color: Color(0xFF7f30fe),fontSize: 16.0, fontWeight: FontWeight.w500),
                      )
                    ],
