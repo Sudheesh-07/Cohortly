@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "960875369229",
+    "project_id": "cohortly-22739",
+    "storage_bucket": "cohortly-22739.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960875369229:android:150ec580ac5cdd8ce25644",
+        "android_client_info": {
+          "package_name": "com.example.cohortly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbz4yd17halBHUdYYXooTld9BYEbPZksk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
