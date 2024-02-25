@@ -133,7 +133,7 @@ class _SignUpState extends State<SignUp> {
 
                                       padding: EdgeInsets.all(10),
                                       decoration:BoxDecoration(color: Color(0xFF6380fb),borderRadius: BorderRadius.circular(10)),
-                                      child: Center(child: Text("SignIn",style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold),)),),
+                                      child: Center(child: Text("Sign Up",style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold),)),),
                                   ),
                                 ),
                               ),
