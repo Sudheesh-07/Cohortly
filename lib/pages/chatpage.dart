@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
 
@@ -16,6 +17,7 @@ class _ChatPageState extends State<ChatPage> {
         margin:EdgeInsets.only(top: 60.0,left: 20.0, right: 20.0,),
         child: Column(
           children: [
+<<<<<<< HEAD
         Padding(
           padding: const EdgeInsets.only(left: 10.0),
           child: Row(
@@ -28,6 +30,18 @@ class _ChatPageState extends State<ChatPage> {
               fontSize: 20.0,
               fontWeight: FontWeight.w500),
           ),],
+=======
+        Row(
+          children:[Icon(Icons.arrow_back_ios_new_outlined,color: Color(0xffc199cd),),
+            SizedBox(width:90.0,),
+            Text(
+          "Sudheesh",
+          style: TextStyle(
+            color: Color(0xffc199cd),
+            fontSize: 20.0,
+            fontWeight: FontWeight.w500),
+        ),],
+>>>>>>> fe54543c2fad56b57e8018c69f0fc6d6cf8970ec
 
           ),
         ),
