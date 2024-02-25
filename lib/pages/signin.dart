@@ -20,6 +20,7 @@ class _SignInState extends State<SignIn> {
   userLogin() async{
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Home()));
     }
     on FirebaseAuthException catch(e){

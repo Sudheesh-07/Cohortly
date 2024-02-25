@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
 
@@ -17,7 +18,7 @@ class _ChatPageState extends State<ChatPage> {
         child: Stack(
           children: [
         Row(
-          children:[Icon(icons.arrow_back_ios_new_outlined,color: Color(0xffc199cd),),
+          children:[Icon(Icons.arrow_back_ios_new_outlined,color: Color(0xffc199cd),),
             SizedBox(width:90.0,),
             Text(
           "Sudheesh",
