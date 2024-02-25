@@ -64,7 +64,7 @@ import 'package:flutter/material.dart';
                           ),
                         Text("4:30 PM",style: TextStyle(color: Colors.black,fontSize: 17.0,fontWeight: FontWeight.w500),),
                     ],),
-                      SizedBox(height: 30.0,)
+                      SizedBox(height: 30.0,),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
