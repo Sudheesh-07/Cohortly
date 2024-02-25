@@ -47,7 +47,7 @@ import 'package:flutter/material.dart';
                       children: [
                       ClipRRect(
                            borderRadius:BorderRadius.circular(60),
-                          child: Image.asset("images/boy.jpg", height:70,width: 70,fit: BoxFit.cover,)),
+                          child: Image.asset("images/boy.jfif", height:70,width: 70,fit: BoxFit.cover,)),
                           SizedBox(width: 10.0,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +71,7 @@ import 'package:flutter/material.dart';
                           ClipRRect(
                               borderRadius:BorderRadius.circular(60),
                               child: Image.asset(
-                                "images/boy1.jpg",
+                                "images/boy1.jfif",
                                 height:60,
                                 width: 60,
                                 fit: BoxFit.cover,
