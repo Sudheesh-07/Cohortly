@@ -3,6 +3,8 @@ import 'package:cohortly/pages/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cohortly/pages/home.dart';
 import 'package:flutter/material.dart';
+import 'package:cohortly/pages/signin.dart';
+import 'package:cohortly/pages/signup.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
