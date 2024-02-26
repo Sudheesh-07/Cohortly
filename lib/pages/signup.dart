@@ -1,6 +1,9 @@
 import 'package:cohortly/pages/home.dart';
+import 'package:cohortly/service/databases.dart';
+import 'package:cohortly/service/shared_pref.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart';
 
 
 class SignUp extends StatefulWidget {
@@ -20,12 +23,30 @@ class SignUp extends StatefulWidget {
   TextEditingController confirmpasswordcontroller = new TextEditingController();
   TextEditingController passwordcontroller = new TextEditingController();
 
+  final _formkey = GlobalKey<FormState>();
+
   //when user clicks sing up
   registration()async{
     if (password != null && password == confirm_pass) {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
+String Id = randomAlphaNumeric(10);
+        Map<String, dynamic>userInfoMap={
+          "Name": namecontroller.text,
+          "Email": mailcontroller.text,
+          "Username": mailcontroller.text.replaceAll("@gmail.com", ""),
+          "Photo": "https://i.pinimg.com/564x/c9/99/1f/c9991fb58e2a1c32198a1cab0b285ace.jpg",
+          "ID": Id
+        };
+        await DatabaseMethods().adduserDetails(userInfoMap, Id);
+        await SharedPrefernceHelper().saverUserId(Id);
+        await SharedPrefernceHelper().saverUserDisplayname(namecontroller.text);
+        await SharedPrefernceHelper().saveUserEmail(mailcontroller.text);
+        await SharedPrefernceHelper().saverUserPic("https://i.pinimg.com/564x/c9/99/1f/c9991fb58e2a1c32198a1cab0b285ace.jpg");
+        await SharedPrefernceHelper().saverUserName(mailcontroller.text.replaceAll("@gmail.com", ""));
+
+
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
           "Sucessfully Registered", style: TextStyle(fontSize: 20.0),)));
       } on FirebaseAuthException catch (e) {
@@ -44,7 +65,6 @@ class SignUp extends StatefulWidget {
       //harish
     }
   }
-  final _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,7 +159,7 @@ class SignUp extends StatefulWidget {
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           prefixIcon: Icon(
-                                            Icons.mail_outline,
+                                            Icons.person_outlined,
                                             color: Color(0xFF7f30fe),))
 
                                   ),),
@@ -167,7 +187,7 @@ class SignUp extends StatefulWidget {
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           prefixIcon: Icon(
-                                            Icons.person_outline,
+                                            Icons.mail_outline,
                                             color: Color(0xFF7f30fe),))
                                   ),),
                                 SizedBox(height: 20.0,),
@@ -228,26 +248,39 @@ class SignUp extends StatefulWidget {
                                     obscureText: true,
                                   ),),
                                 SizedBox(height: 50.0,),
-                                Center(
-                                  child: Container(
-                                    width: 130,
-                                    child: Material(
-                                      elevation: 5.0,
-                                      borderRadius: BorderRadius.circular(
-                                          10),
-                                      child: Container(
+                                GestureDetector(
+                                  onTap: (){
+                                    if(_formkey.currentState!.validate()){
+                                      setState(() {
+                                        email = mailcontroller.text;
+                                        name = namecontroller.text;
+                                        password = passwordcontroller.text;
+                                        confirm_pass= confirmpasswordcontroller.text;
+                                      });
+                                    }
+                                    registration();
+                                  },
+                                  child: Center(
+                                    child: Container(
+                                      width: 130,
+                                      child: Material(
+                                        elevation: 5.0,
+                                        borderRadius: BorderRadius.circular(
+                                            10),
+                                        child: Container(
 
-                                        padding: EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                            color: Color(0xFF6380fb),
-                                            borderRadius: BorderRadius
-                                                .circular(10)),
-                                        child: Center(child: Text("Sign Up",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18.0,
-                                              fontWeight: FontWeight
-                                                  .bold),)),),
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                              color: Color(0xFF6380fb),
+                                              borderRadius: BorderRadius
+                                                  .circular(10)),
+                                          child: Center(child: Text("Sign Up",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight
+                                                    .bold),)),),
+                                      ),
                                     ),
                                   ),
                                 ),
