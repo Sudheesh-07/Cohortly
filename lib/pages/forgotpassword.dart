@@ -18,18 +18,45 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController useremailcontroller = new TextEditingController();
 
   resetPassword() async {
-    try{
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: "dummyPassword");
+    try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Password reset mail has been sent",style: TextStyle(fontSize: 18.0),)));
-      return true;
-    }on FirebaseAuthException catch (e){
-      if (e.code=='user-not-found'){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("no user with this email",style: TextStyle(fontSize: 18.0),)));
-      }else if(e.code == "The supplied auth credential is incorrect, malformed or has expired"){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No User found for given email or incorrect credentials",style: TextStyle(fontSize: 18.0),)));
-      }else if(e.code == "invalid-credential"){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("inncorrect email or user not found",style: TextStyle(fontSize: 18.0),)));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Password reset email has been sent",
+            style: TextStyle(fontSize: 18.0),
+          ),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e.code);
+      if (e.code == 'user-not-found') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "No user with this email",
+              style: TextStyle(fontSize: 18.0),
+            ),
+          ),
+        );
+      } else if (e.code == "invalid-credential") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Incorrect email or user not found",
+              style: TextStyle(fontSize: 18.0),
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "${e.code} Please wait before trying again",
+              style: TextStyle(fontSize: 18.0),
+            ),
+          ),
+        );
       }
     }
   }
