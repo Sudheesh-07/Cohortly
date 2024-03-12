@@ -1,3 +1,4 @@
+import 'package:cohortly/pages/forgotpassword.dart';
 import 'package:cohortly/pages/signin.dart';
 import 'package:cohortly/pages/signup.dart';
 import 'package:cohortly/pages/chatpage.dart';
@@ -28,13 +29,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ), //Theme Data
-      home: SignUp()
+      home: SignIn(),
     ); //MaterialApp
   }
 }
-
-
-
 Future<void> initialization(BuildContext? context) async{
   await Future.delayed(Duration(seconds: 3));
 }

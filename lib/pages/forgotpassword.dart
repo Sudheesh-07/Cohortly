@@ -1,41 +1,35 @@
-import 'package:cohortly/pages/forgotpassword.dart';
-import 'package:cohortly/pages/home.dart';
+
 import 'package:cohortly/pages/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+
+class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<ForgotPassword> createState() => _ForgotPasswordState();
 }
 
-class _SignInState extends State<SignIn> {
-  String email = "", password = "";
-  TextEditingController useremailcontroller = new TextEditingController();
-  TextEditingController userpasswordcontroller = new TextEditingController();
-
+class _ForgotPasswordState extends State<ForgotPassword> {
+  String email = "";
   final _formkey = GlobalKey<FormState>();
+  TextEditingController useremailcontroller = new TextEditingController();
 
-  userLogin() async {
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Home()));
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "no-user-found") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.orangeAccent,
-            content: Text("No user found for that Email",
-                style: TextStyle(fontSize: 18.0, color: Colors.black))));
-      } else if (e.code == "wrong-password") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.orangeAccent,
-            content: Text("Wrong password",
-                style: TextStyle(fontSize: 18.0, color: Colors.black))));
+  resetPassword() async {
+    try{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: "dummyPassword");
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Password reset mail has been sent",style: TextStyle(fontSize: 18.0),)));
+      return true;
+    }on FirebaseAuthException catch (e){
+      if (e.code=='user-not-found'){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("no user with this email",style: TextStyle(fontSize: 18.0),)));
+      }else if(e.code == "The supplied auth credential is incorrect, malformed or has expired"){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No User found for given email or incorrect credentials",style: TextStyle(fontSize: 18.0),)));
+      }else if(e.code == "invalid-credential"){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("inncorrect email or user not found",style: TextStyle(fontSize: 18.0),)));
       }
     }
   }
@@ -47,7 +41,9 @@ class _SignInState extends State<SignIn> {
       body: Container(
         child: Stack(
           children: [
-            Container(
+            SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+                child: Container(
                 height: MediaQuery.of(context).size.height / 4.0,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
@@ -58,27 +54,27 @@ class _SignInState extends State<SignIn> {
                     borderRadius: BorderRadius.vertical(
                         bottom: Radius.elliptical(
                             MediaQuery.of(context).size.width,
-                            105.0)))), //Container //BoxDecoration
+                            105.0))))), //Container //BoxDecoration
             Padding(
                 padding: const EdgeInsets.only(top: 70.0),
                 child: Column(
                   children: <Widget>[
                     Center(
                         child: Text(
-                      "SignIn",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold), //textstyle
-                    )),
+                          "Recover Password",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold), //textstyle
+                        )),
                     Center(
                         child: Text(
-                      "Login to your account",
-                      style: TextStyle(
-                          color: Color(0xFFbbb0ff),
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w500), //textstyle
-                    )),
+                          "Enter Your Registered Email",
+                          style: TextStyle(
+                              color: Color(0xFFbbb0ff),
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500), //textstyle
+                        )),
                     SizedBox(
                       height: 20.0,
                     ),
@@ -91,13 +87,14 @@ class _SignInState extends State<SignIn> {
                         child: Container(
                           padding: EdgeInsets.symmetric(
                               vertical: 30.0, horizontal: 20.0),
-                          height: MediaQuery.of(context).size.height / 2,
+                          height: MediaQuery.of(context).size.height / 3,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10)),
                           child: Form(
                             key: _formkey,
+
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -116,7 +113,7 @@ class _SignInState extends State<SignIn> {
                                         return null;
                                       },
                                       decoration: InputDecoration(
-                                        labelText: "Email",
+                                          labelText: "Email",
                                           border: InputBorder.none,
                                           prefixIcon: Icon(
                                             Icons.mail_outline,
@@ -127,61 +124,17 @@ class _SignInState extends State<SignIn> {
                                   height: 20.0,
                                 ),
                                 SizedBox(
-                                  height: 10.0,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                      border: Border.all(width: 2.0,
-                                          color: Colors.deepPurple.shade800)),
-                                  child: TextFormField(
-                                    controller: userpasswordcontroller,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return "Please Enter a Password";
-                                      }
-                                      return null;
-                                    },
-                                    decoration: InputDecoration(
-                                      labelText: "Password",
-                                        border: InputBorder.none,
-                                        prefixIcon: Icon(
-                                          Icons.password,
-                                          color: Color(0xFF7f30fe),
-                                        )),
-                                    obscureText: true,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                GestureDetector(
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
-                                  },
-                                 child: Container(
-                                   alignment: Alignment.bottomRight,
-                                  child: Text(
-                                    "Forgot Password?",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500),
-
-                                  ),
-                                )),
-                                SizedBox(
                                   height: 50.0,
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    if (_formkey.currentState!.validate()) {
+                                    if(_formkey.currentState!.validate()){
                                       setState(() {
                                         email = useremailcontroller.text;
-                                        password = userpasswordcontroller.text;
+
                                       });
+                                      resetPassword();
                                     }
-                                    userLogin();
                                   },
                                   child: Center(
                                     child: Container(
@@ -194,15 +147,15 @@ class _SignInState extends State<SignIn> {
                                           decoration: BoxDecoration(
                                               color: Color(0xFF6380fb),
                                               borderRadius:
-                                                  BorderRadius.circular(10)),
+                                              BorderRadius.circular(10)),
                                           child: Center(
                                               child: Text(
-                                            "SignIn",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.bold),
-                                          )),
+                                                "Send Email",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 18.0,
+                                                    fontWeight: FontWeight.bold),
+                                              )),
                                         ),
                                       ),
                                     ),
@@ -226,10 +179,7 @@ class _SignInState extends State<SignIn> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SignUp()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
                           },
                           child: Text(
                             " Sign Up Now!",
@@ -241,11 +191,12 @@ class _SignInState extends State<SignIn> {
                         )
                       ],
                     )
-                  ],
+            ],
                 ))
-          ],
+            ],
         ),
-      ),
+    ),
     );
   }
 }
+
