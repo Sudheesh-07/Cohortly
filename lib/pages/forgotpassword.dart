@@ -5,6 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
+
+
+// class _State extends State<> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Placeholder();
+//   }
+// }
+
+
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
 
@@ -62,6 +72,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,12 +90,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         colors: [Colors.teal.shade400, Colors.teal.withGreen(60)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight), //Linear Gradient
-                    borderRadius: BorderRadius.vertical(
-                        bottom: Radius.elliptical(
+                         begin: Alignment.topLeft,
+                         end: Alignment.bottomRight),
+                         borderRadius: BorderRadius.vertical(
+                         bottom: Radius.elliptical(
                             MediaQuery.of(context).size.width,
-                            105.0))))), //Container //BoxDecoration
+                          105.0))))), //Container //BoxDecoration
             Padding(
                 padding: const EdgeInsets.only(top: 70.0),
                 child: Column(
