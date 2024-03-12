@@ -22,6 +22,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          backgroundColor: Colors.green,
           content: Text(
             "Password reset email has been sent",
             style: TextStyle(fontSize: 18.0),
@@ -70,12 +71,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           children: [
             SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-                child: Container(
+                child: AnimatedContainer(
+                  duration: Duration(seconds: 1),
                 height: MediaQuery.of(context).size.height / 4.0,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [Color(0xFF7f30fe), Color(0xFF6380fb)],
+                        colors: [Colors.teal.shade400, Colors.teal.withGreen(60)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight), //Linear Gradient
                     borderRadius: BorderRadius.vertical(
@@ -98,7 +100,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         child: Text(
                           "Enter Your Registered Email",
                           style: TextStyle(
-                              color: Color(0xFFbbb0ff),
+                              color: Colors.teal.shade100,
                               fontSize: 18.0,
                               fontWeight: FontWeight.w500), //textstyle
                         )),
@@ -130,7 +132,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                       border: Border.all(width: 2.0,
-                                          color: Colors.deepPurple.shade800)),
+                                          color: Colors.teal.shade900)),
                                   child: TextFormField(
                                       controller: useremailcontroller,
                                       validator: (value) {
@@ -144,7 +146,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                           border: InputBorder.none,
                                           prefixIcon: Icon(
                                             Icons.mail_outline,
-                                            color: Color(0xFF7f30fe),
+                                            color: Colors.teal.shade800,
                                           ))),
                                 ),
                                 SizedBox(
@@ -172,7 +174,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                         child: Container(
                                           padding: EdgeInsets.all(10),
                                           decoration: BoxDecoration(
-                                              color: Color(0xFF6380fb),
+                                              color: Colors.teal.shade700,
                                               borderRadius:
                                               BorderRadius.circular(10)),
                                           child: Center(
@@ -211,7 +213,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           child: Text(
                             " Sign Up Now!",
                             style: TextStyle(
-                                color: Color(0xFF7f30fe),
+                                color: Colors.teal.shade800,
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w500),
                           ),

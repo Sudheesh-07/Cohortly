@@ -36,6 +36,11 @@ class _SignInState extends State<SignIn> {
             backgroundColor: Colors.orangeAccent,
             content: Text("Wrong password",
                 style: TextStyle(fontSize: 18.0, color: Colors.black))));
+      }else {   //default exception
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(e.code,
+                style: TextStyle(fontSize: 18.0, color: Colors.black))));
       }
     }
   }
