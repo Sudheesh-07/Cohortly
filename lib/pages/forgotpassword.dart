@@ -62,8 +62,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              "${e.code} Please wait before trying again",
+            content: Text(e.code,
               style: TextStyle(fontSize: 18.0),
             ),
           ),
