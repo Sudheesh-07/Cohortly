@@ -9,7 +9,7 @@ import 'package:cohortly/pages/signin.dart';
 import 'package:cohortly/pages/signup.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FlutterNativeSplash.removeAfter(initialization);
@@ -29,10 +29,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ), //Theme Data
-      home: SignIn(),
+      home: SignUp(),
     ); //MaterialApp
   }
 }
-Future<void> initialization(BuildContext? context) async{
+Future<void> initialization(BuildContext? context) async {
   await Future.delayed(Duration(seconds: 3));
 }

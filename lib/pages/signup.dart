@@ -33,11 +33,15 @@ class SignUp extends StatefulWidget {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
-String Id = randomAlphaNumeric(10);
+        String Id = randomAlphaNumeric(10);
+        String user = mailcontroller.text.replaceAll("@gmail.com", '');
+        String updateusername = user.replaceFirst(user[0], user[0].toUpperCase());
+        String firstletter = user.substring(0,1).toUpperCase();
         Map<String, dynamic>userInfoMap={
           "Name": namecontroller.text,
           "Email": mailcontroller.text,
-          "Username": mailcontroller.text.replaceAll("@gmail.com", ""),
+          "Username":updateusername.toUpperCase(),
+          "Search Key": firstletter,
           "Photo": "https://i.pinimg.com/564x/c9/99/1f/c9991fb58e2a1c32198a1cab0b285ace.jpg",
           "ID": Id
         };

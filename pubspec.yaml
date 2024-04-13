@@ -34,7 +34,10 @@ dependencies:
   cloud_firestore: ^4.8.5
   random_string: ^2.3.1
   shared_preferences: ^2.2.0
-  
+  dash_chat_2: ^0.0.20
+  http: ^1.2.0
+  google_generative_ai: ^0.2.2
+
 
 
 
