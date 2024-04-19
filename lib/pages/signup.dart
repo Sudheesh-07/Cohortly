@@ -14,7 +14,7 @@ class SignUp extends StatefulWidget {
   State<SignUp> createState() => _SignUpState();
 }
 
- class _SignUpState extends State<SignUp> {
+ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin{
   //harish
   String email = "",
       password = "",
@@ -71,6 +71,56 @@ class SignUp extends StatefulWidget {
       //harish
     }
   }
+
+
+  late AnimationController _controller;
+  late Animation<Alignment> _topanimation;
+  late Animation<Alignment> _bottomanimation;
+
+  @override
+  void initState(){
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 10));
+    _topanimation = TweenSequence<Alignment>(
+      [
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.topLeft, end: Alignment.topRight),
+          weight: 1,),
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.topRight, end: Alignment.bottomRight),
+          weight: 1,),
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.bottomRight, end: Alignment.bottomLeft),
+          weight: 1,),
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.bottomLeft, end: Alignment.topLeft),
+          weight: 1,),
+
+
+      ],
+    ).animate(_controller);
+
+    _bottomanimation = TweenSequence<Alignment>(
+      [
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.bottomRight, end: Alignment.bottomLeft),
+          weight: 1,),
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.bottomLeft, end: Alignment.topLeft),
+          weight: 1,),
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.topLeft, end: Alignment.topRight),
+          weight: 1,),
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.topRight, end: Alignment.bottomLeft),
+          weight: 1,),
+
+      ],
+    ).animate(_controller);
+
+    _controller.repeat();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,26 +128,21 @@ class SignUp extends StatefulWidget {
       body: Container(
         child: Stack(
           children: [
-            Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height / 4.0,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Color(0xFF7f30fe), Color(0xFF6380fb)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight), //Linear Gradient
-                    borderRadius: BorderRadius.vertical(
-                        bottom: Radius.elliptical(MediaQuery
-                            .of(context)
-                            .size
-                            .width, 105.0))
-                )), //Container //BoxDecoration
+            AnimatedBuilder(animation: _controller, builder: (context,_){
+              return Container(height: MediaQuery.of(context).size.height / 4.0,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                  colors: [Color(0xFF7f30fe), Color(0xFF6380fb)],
+              begin: _topanimation.value,
+              end: _bottomanimation.value), //Linear Gradient
+              borderRadius: BorderRadius.vertical(
+              bottom: Radius.elliptical(MediaQuery
+                  .of(context)
+                  .size
+                  .width, 105.0))));
+                  }
+                ), //Container //BoxDecoration
             Padding(
                 padding: const EdgeInsets.only(top: 70.0),
                 child: Column(

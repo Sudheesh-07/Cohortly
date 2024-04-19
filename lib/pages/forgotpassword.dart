@@ -22,7 +22,7 @@ class ForgotPassword extends StatefulWidget {
   State<ForgotPassword> createState() => _ForgotPasswordState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> {
+class _ForgotPasswordState extends State<ForgotPassword> with SingleTickerProviderStateMixin{
   String email = "";
   final _formkey = GlobalKey<FormState>();
   TextEditingController useremailcontroller = new TextEditingController();
@@ -71,6 +71,54 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     }
   }
 
+  late AnimationController _controller;
+  late Animation<Alignment> _topanimation;
+  late Animation<Alignment> _bottomanimation;
+
+  @override
+  void initState(){
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 15));
+    _topanimation = TweenSequence<Alignment>(
+      [
+        TweenSequenceItem<Alignment>(
+            tween: Tween<Alignment>(begin: Alignment.topLeft, end: Alignment.topRight),
+            weight: 1,),
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.topRight, end: Alignment.bottomRight),
+          weight: 1,),
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.bottomRight, end: Alignment.bottomLeft),
+          weight: 1,),
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.bottomLeft, end: Alignment.topLeft),
+          weight: 1,),
+
+
+      ],
+    ).animate(_controller);
+
+    _bottomanimation = TweenSequence<Alignment>(
+      [
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.bottomRight, end: Alignment.bottomLeft),
+          weight: 1,),
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.bottomLeft, end: Alignment.topLeft),
+          weight: 1,),
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.topLeft, end: Alignment.topRight),
+          weight: 1,),
+        TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(begin: Alignment.topRight, end: Alignment.bottomLeft),
+          weight: 1,),
+
+      ],
+    ).animate(_controller);
+
+    _controller.repeat();
+  }
+
 
 
   @override
@@ -82,19 +130,24 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           children: [
             SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-                child: AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                height: MediaQuery.of(context).size.height / 4.0,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Colors.teal.shade400, Colors.teal.withGreen(60)],
-                         begin: Alignment.topLeft,
-                         end: Alignment.bottomRight),
-                         borderRadius: BorderRadius.vertical(
-                         bottom: Radius.elliptical(
-                            MediaQuery.of(context).size.width,
-                          105.0))))), //Container //BoxDecoration
+                child: AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context,_){
+                    return Container(
+                      height: MediaQuery.of(context).size.height / 4.0,
+                      width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [Color(0xFF26A69A), Color(0xFF00695C)],
+                                begin: _bottomanimation.value,
+                                end: _topanimation.value),
+                            borderRadius: BorderRadius.vertical(
+                                bottom: Radius.elliptical(
+                                    MediaQuery.of(context).size.width,
+                                    105.0))));
+
+                  },
+                )), //Container //BoxDecoration
             Padding(
                 padding: const EdgeInsets.only(top: 70.0),
                 child: Column(
