@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cohortly/pages/chatpage.dart';
 import 'package:cohortly/service/databases.dart';
+import 'package:cohortly/service/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:cohortly/pages/chatbot.dart';
 class Home extends StatefulWidget {
@@ -12,6 +13,37 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool search = false;
+  String?  myName, myProfilePic, myUserName, myEmail;
+
+  getthesharedpref()async{
+    myName = await SharedPrefernceHelper().getUserDisplayname();
+    myProfilePic = await SharedPrefernceHelper().getUserPic();
+    myUserName = await SharedPrefernceHelper().getUserName();
+    myEmail = await SharedPrefernceHelper().getUserEmail();
+    setState(() {
+
+    });
+  }
+    ontheload() async{
+      await getthesharedpref();
+      setState(() {
+
+      });
+    }
+    @override
+    void initState(){
+      super.initState();
+      ontheload();
+    }
+
+  getchatRoomidbyUserName(String a,String b)
+  {
+    if (a.substring(0,1).codeUnitAt(0)> b.substring(0,1).codeUnitAt(0)){
+      return "$b\_$a";
+    }else{
+      return "$a\_$b";
+    }
+  }
 
   var queryResultSet = [];
   var tempSearchStore = [];
@@ -190,10 +222,6 @@ class _HomeState extends State<Home> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ChatPage()));
                               },
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,34 +343,48 @@ class _HomeState extends State<Home> {
   }
 
   Widget buildResultCard(data) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      child: Material(
-        elevation: 5,
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(10)),
-          child: Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    data["Name"],
-                    style: TextStyle(
-                        color: Colors.black,
+    return GestureDetector(
+      onTap: ()async{
+        search = false;
+        setState(() {
+
+        });
+        var chatRoomId = getchatRoomidbyUserName(myUserName!, data["username"]);
+        Map<String,dynamic>chatRoominfoMap = {
+          "users":[myUserName, data["username"]],
+        };
+        await DatabaseMethods().createChatroom(chatRoomId, chatRoominfoMap);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> ChatPage(name: data['Name'], profileurl: data['Photo'], username: data['username'])));
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 8),
+        child: Material(
+          elevation: 5,
+          borderRadius: BorderRadius.circular(10),
+          child: Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data["Name"],
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
+                    SizedBox(height: 10,),
+                    Text(data["Username"], style: TextStyle(color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(height: 10,),
-                  Text(data["Username"], style: TextStyle(color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),)
-                ],
-              )
-            ],
+                        fontSize: 18),)
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
