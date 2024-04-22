@@ -82,95 +82,229 @@ class _HomeState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF553370),
-      body: Container(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 20.0, right: 20.0, top: 50.0, bottom: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  search
-                      ? Expanded(
-                          child: TextField(
-                          onChanged: (value) {
-                            initiateSearch(value.toUpperCase());
-                          },
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Search User',
-                              hintStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w500)),
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w500),
-                        ))
-                      : Text(
-                          "Cohortly",
-                          style: TextStyle(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Container(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 20.0, right: 20.0, top: 50.0, bottom: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    search
+                        ? Expanded(
+                            child: TextField(
+                            onChanged: (value) {
+                              initiateSearch(value.toUpperCase());
+                            },
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Search User',
+                                hintStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w500)),
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w500),
+                          ))
+                        : Text(
+                            "Cohortly",
+                            style: TextStyle(
+                                color: Color(0xffc199cd),
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                    GestureDetector(
+                      onTap: () {
+                        search = true;
+                        setState(() {});
+                      },
+                      child: Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                              color: Color(0xFF3a2144),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: search? GestureDetector(
+                            onTap: (){
+                              search =false;
+                              setState(() {
+                                
+                              });
+                            },
+                            child: Icon(
+                              Icons.close,
                               color: Color(0xffc199cd),
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                  GestureDetector(
-                    onTap: () {
-                      search = true;
-                      setState(() {});
-                    },
-                    child: Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            color: Color(0xFF3a2144),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Icon(
-                          Icons.search,
-                          color: Color(0xffc199cd),
-                        )),
-                  )
-                ],
+                            ),
+                          ):Icon(
+                            Icons.search,
+                            color: Color(0xffc199cd),
+                          )
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-              width: MediaQuery.of(context).size.width,
-              height: search
-                  ? MediaQuery.of(context).size.height / 1.19
-                  : MediaQuery.of(context).size.height / 1.15,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20))),
-              child: Column(
-                children: [
-                  search? ListView(
-                          padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                          primary: false,
-                          shrinkWrap: true,
-                          children: tempSearchStore.map((element) {
-                            return buildResultCard(element);
-                          }).toList(),
-                        )
-                      : Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Chatbot()));
-                              },
-                              child: Row(
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+                width: MediaQuery.of(context).size.width,
+                height: search
+                    ? MediaQuery.of(context).size.height / 1.19
+                    : MediaQuery.of(context).size.height / 1.15,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20))),
+                child: Column(
+                  children: [
+                    search? ListView(
+                            padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                            primary: false,
+                            shrinkWrap: true,
+                            children: tempSearchStore.map((element) {
+                              return buildResultCard(element);
+                            }).toList(),
+                          )
+                        : Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Chatbot()));
+                                },
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ClipRRect(
+                                        borderRadius: BorderRadius.circular(60),
+                                        child: Image.asset(
+                                          "images/gemini.png",
+                                          height: 60,
+                                          width: 60,
+                                          fit: BoxFit.cover,
+                                        )),
+                                    SizedBox(
+                                      width: 10.0,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 10.0,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Gemini",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 17.0,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          "How can I help you today?",
+                                          style: TextStyle(
+                                              color: Colors.black45,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      "4:30 PM",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 17.0,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                },
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      ClipRRect(
+                                          borderRadius: BorderRadius.circular(60),
+                                          child: Image.asset(
+                                            "images/boy.jfif",
+                                            height: 70,
+                                            width: 70,
+                                            fit: BoxFit.cover,
+                                          )),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      SingleChildScrollView(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Sudheesh",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 17.0,
+                                                      fontWeight: FontWeight.w500),
+                                                ),
+                                              ],
+                                            ),
+                                            Text(
+                                              "Hello, What are you doing?",
+                                              style: TextStyle(
+                                                  color: Colors.black45,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Text(
+                                        "4:30 PM",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17.0,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ClipRRect(
                                       borderRadius: BorderRadius.circular(60),
                                       child: Image.asset(
-                                        "images/gemini.png",
+                                        "images/boy1.jfif",
                                         height: 60,
                                         width: 60,
                                         fit: BoxFit.cover,
@@ -186,10 +320,10 @@ class _HomeState extends State<Home> {
                                       ),
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "Gemini",
+                                            "Arin",
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 17.0,
@@ -198,7 +332,7 @@ class _HomeState extends State<Home> {
                                         ],
                                       ),
                                       Text(
-                                        "How can I help you today?",
+                                        "Hi, What is going on?",
                                         style: TextStyle(
                                             color: Colors.black45,
                                             fontSize: 15.0,
@@ -216,127 +350,13 @@ class _HomeState extends State<Home> {
                                   ),
                                 ],
                               ),
-                            ),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                              },
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                      borderRadius: BorderRadius.circular(60),
-                                      child: Image.asset(
-                                        "images/boy.jfif",
-                                        height: 70,
-                                        width: 70,
-                                        fit: BoxFit.cover,
-                                      )),
-                                  SizedBox(
-                                    width: 10.0,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 10.0,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "Sudheesh",
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 17.0,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ],
-                                      ),
-                                      Text(
-                                        "Hello, What are you doing?",
-                                        style: TextStyle(
-                                            color: Colors.black45,
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    "4:30 PM",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 17.0,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                    borderRadius: BorderRadius.circular(60),
-                                    child: Image.asset(
-                                      "images/boy1.jfif",
-                                      height: 60,
-                                      width: 60,
-                                      fit: BoxFit.cover,
-                                    )),
-                                SizedBox(
-                                  width: 10.0,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Arin",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 17.0,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      "Hi, What is going on?",
-                                      style: TextStyle(
-                                          color: Colors.black45,
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                Text(
-                                  "4:30 PM",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 17.0,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                ],
-              ),
-            )
-          ],
+                            ],
+                          ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -349,12 +369,12 @@ class _HomeState extends State<Home> {
         setState(() {
 
         });
-        var chatRoomId = getchatRoomidbyUserName(myUserName!, data["username"]);
+        var chatRoomId = getchatRoomidbyUserName(myUserName!, data["Username"]);
         Map<String,dynamic>chatRoominfoMap = {
-          "users":[myUserName, data["username"]],
+          "users":[myUserName, data["Username"]],
         };
         await DatabaseMethods().createChatroom(chatRoomId, chatRoominfoMap);
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> ChatPage(name: data['Name'], profileurl: data['Photo'], username: data['username'])));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> ChatPage(name: data["Name"], profileurl: data["Photo"], username: data["Username"])));
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 8),
@@ -367,20 +387,30 @@ class _HomeState extends State<Home> {
                 color: Colors.white, borderRadius: BorderRadius.circular(10)),
             child: Row(
               children: [
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(60),
+                    child: Image.network(data["Photo"],height: 50,width: 50,fit: BoxFit.cover,)),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      data["Name"],
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
+                    SizedBox(width: 10.0,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        data["Name"],
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
                     ),
                     SizedBox(height: 10,),
-                    Text(data["Username"], style: TextStyle(color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(data["Username"], style: TextStyle(color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15),),
+                    )
                   ],
                 )
               ],
