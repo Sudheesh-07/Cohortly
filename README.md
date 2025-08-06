@@ -1,4 +1,4 @@
-# cohortly
+# cohortly app
 
 A new Flutter project.
 
